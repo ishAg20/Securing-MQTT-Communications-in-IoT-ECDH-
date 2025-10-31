@@ -25,21 +25,54 @@ This project secures MQTT-based IoT communications by:
 - `config.yaml`: Configuration for MQTT broker, topics, key rotation, dataset, etc.
 - `requirements.txt`: Required Python packages.
 
-## Usage
+## Quickstart: Step-by-Step Setup
 
-1. **Install requirements**:  
-   `pip install -r requirements.txt`
-2. **Edit `config.yaml`** to fit your MQTT broker, topic, and rotation needs.
+### Clone the Repository
+git clone https://github.com/ishAg20/Securing-MQTT-Communications-in-IoT
 
-3. **Start publisher and subscriber** (in separate shells):
-   `python mqtt_publisher.py
-python mqtt_subscriber.py`
+cd mqtt-aes
 
-## Performance Evaluation
+### Download the TON-IoT Dataset
+- Visit [TON-IoT Datasets](https://unsw-my.sharepoint.com/personal/z5025758_ad_unsw_edu_au/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fz5025758%5Fad%5Funsw%5Fedu%5Fau%2FDocuments%2FTON%5FIoT%20datasets%2FTrain%5FTest%5Fdatasets%2FTrain%5FTest%5FIoT%5Fdataset&ga=1)
+- Download `Train_Test_IoT_Fridge.csv`
+- Place the file inside the `mqtt-aes/` directory
 
-Run:
-`python performance.py`
-This script runs AES-GCM encryption/decryption performance benchmarks and reports average latency, overhead, and throughput using a representative IoT dataset.
+### Create the Keys Directory
+mkdir keys
+
+### Install Python Dependencies
+pip install -r requirements.txt
+
+### Preview the Dataset
+python dataset.py
+
+### Benchmark AES Overheads & Visualize
+python performance.py
+
+This runs tests for all configurations and generates a PNG visualization (`aes_performance_analysis.png`). The visualizations open automatically.
+
+### Run MQTT Subscriber (Listener) in One Terminal
+python mqtt_subscriber.py
+
+Receives encrypted telemetry, decrypts it, and prints latency stats live.
+
+### Run MQTT Publisher (in Another Terminal)
+python mqtt_publisher.py
+
+Publishes encrypted telemetry with various configurations; displays encryption time and size statistics.
+
+## MQTT Broker Integration
+
+By default, the scripts connect to `localhost:1883` (this can be changed in `config.yaml`).  
+Recommended: Install and test with Mosquitto.
+
+Example installation and running Mosquitto on Ubuntu/Debian:
+sudo apt install mosquitto mosquitto-clients
+mosquitto -v
+
+
+You can monitor MQTT traffic using Mosquitto CLI:
+mosquitto_sub -h localhost -p 1883 -t 'ton_iot/telemetry'
 
 ## Security Notes
 
