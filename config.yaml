@@ -1,0 +1,20 @@
+mqtt:
+  broker: localhost
+  port: 1883
+  keepalive: 60
+  topic: ton_iot/telemetry
+  qos: 1
+key_rotation:
+  interval_seconds: 300 # Rotate keys every 5 mins
+  ecdh_topic: ton_iot/keyex
+encryption:
+  aes_key_size: 256 # AES key bits
+dataset:
+  file: Train_Test_IoT_Fridge.csv
+  label_col: label
+  features: [date, time, fridge_temperature, temp_condition, label, type]
+  sample_size: 1000
+testing:
+  message_count: 200
+  publish_interval_seconds: 0.05
+  measure_overhead: true

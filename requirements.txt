@@ -1,0 +1,9 @@
+paho-mqtt
+pycryptodome
+pandas
+cryptography
+numpy
+pyyaml
+tqdm
+matplotlib
+seaborn
